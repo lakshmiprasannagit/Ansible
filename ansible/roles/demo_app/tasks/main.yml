@@ -1,0 +1,19 @@
+---
+# tasks file for demo_app
+- 
+  copy: "src=demo/app/ dest=/var/www/demo mode=0755"
+  name: "copy demo app source"
+  notify: "restart apache2"
+- 
+  copy: "src=demo/demo.conf dest=/etc/apache2/sites-available mode=0755"
+  name: "copy apache virtual host config"
+  notify: "restart apache2"
+- 
+  name: "setup python virtualenv for the flask app"
+  notify: "restart apache2"
+  pip: "requirements=/var/www/demo/requirements.txt virtualenv=/var/www/demo/.venv"
+- 
+  file: "src=/etc/apache2/sites-available/demo.conf dest=/etc/apache2/sites-enabled/demo.conf state=link"
+  name: "activate demo application site"
+  notify: "restart apache2"
+

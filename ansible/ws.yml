@@ -1,0 +1,8 @@
+# Webserver
+---
+  - hosts: webserver
+    become: true
+    roles:
+      
+      - apache2
+      - demo_app
